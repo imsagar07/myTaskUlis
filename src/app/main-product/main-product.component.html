@@ -1,0 +1,95 @@
+<div class="container p-4 m-4 m-auto">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-left" style="color: brown;"><h3>My Products</h3></div>
+      <div class="col-md-4">
+        <input
+          class="form-control mr-sm-2"
+          placeholder="Search"
+          aria-label="Search"
+          #searchVal
+          (keyup)="getItems($event)"
+        />
+      </div>
+      <div class="col-md-4 text-right">
+        <button
+          type="button"
+          class="btn"
+          [routerLink]="'/product/cart'"
+        >
+          <h5 class="m-0">
+            <i class="bi bi-cart"></i> &nbsp;
+            <span style="background-color: red;color: white;"
+              class="badge badge-light"
+              *ngIf="shoppingCartData && shoppingCartData.length != 0"
+            >
+              {{ shoppingCartData.length }}</span
+            >
+          </h5>
+        </button>
+      </div>
+    </div>
+  
+    <hr />
+    <br />
+  
+  
+    <div class="row" *ngIf="Items">
+      <div *ngFor="let item of Items" class="col-md-6 mb-6">
+        <div
+          class="text-center border h-100 cPointer"
+          [routerLink]="['productDetails/' + item.id]"
+        >
+          <div class="p-4 cardclr">
+            <img
+              width="150"
+              height="150"
+              [src]="item.image"
+              [alt]="item.title"
+              class="img mb-4"
+            />
+            <br />
+            <p class="text-left mt-2">
+              <strong> {{ item.title }}</strong>
+            </p>
+            <p class="text-left mt-2">
+              <strong>{{ item.price | currency : "₹ " }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <nav
+          aria-label="Page navigation example"
+          class="transformNav float-right"
+        >
+          <ul class="pagination">
+            <li class="page-item">
+              <a
+                class="page-link disabled"
+                (click)="getPaginationValue(0, 'previous')"
+                >Previous</a
+              >
+            </li>
+            <li class="page-item" *ngFor="let item of noOfPages; let i = index">
+              <a
+                [class.active]="i == currentValueToShow - 1"
+                class="page-link"
+                (click)="getPaginationValue(i, '')"
+                >{{ i + 1 }}</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link disabled"
+                (click)="getPaginationValue(noOfPages.length, 'next')"
+                >Next</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  

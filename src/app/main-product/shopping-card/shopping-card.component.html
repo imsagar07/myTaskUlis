@@ -1,0 +1,83 @@
+<div class="container p-4 m-4 m-auto">
+    <h3>Shopping Cart</h3>
+    <hr />
+    <br />
+    <div class="row" *ngIf="shoppingCartData && shoppingCartData.length != 0">
+      <div class="col-md-12 text-right">
+        <h4 *ngIf="shoppingCartData">
+          Cart Products:-{{ shoppingCartData.length }}
+        </h4>
+      </div>
+      <table
+      class="table table-striped"
+      
+    >
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">price</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of shoppingCartData; let i = index">
+          <td class="text-left d-flex align-items-center">
+            <img [src]="prod.image" width="70" height="70" [alt]="prod.title" />
+            <p class="ml-2">
+              <strong>{{ prod.title }}</strong>
+            </p>
+          </td>
+          <td>
+            <div class="input-group m-auto w-50">
+              <span class="input-group-prepend">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-number"
+                  (click)="cartChangeValue('-', prod.id)"
+                >
+                  <strong>-</strong>
+                </button>
+              </span>
+              <input
+                type="text"
+                class="form-control input-number text-center"
+                [value]="prod.quantity"
+              />
+              <span class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-number"
+                  (click)="cartChangeValue('+', prod.id)"
+                >
+                  <span>+</span>
+                </button>
+              </span>
+            </div>
+          </td>
+          <td>{{ prod.price | currency : "₹ " }}</td>
+          <td>{{ prod.price * prod.quantity | currency : "₹ " }}</td>
+          <td>
+            <i
+              class="bi bi-trash removeCart"
+              (click)="removeProduct(prod.id)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <th scope="col">Total</th>
+        <th scope="col">{{ totalQuantity }}</th>
+        <th scope="col"></th>
+        <th scope="col" colspan="2">{{ totalPrice | currency : "₹ " }}</th>
+      </tfoot>
+    </table>
+    </div>
+   
+  
+    <button class="btn btn-primary" [routerLink]="'/product'" style="background-color: brown;">
+      Add More Products
+    </button>
+  </div>
+  
